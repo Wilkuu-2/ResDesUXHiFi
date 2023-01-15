@@ -1,9 +1,15 @@
 {
   "dependencies": {
     "com.github.homuler.mediapipe": {
+<<<<<<< Updated upstream
       "version": "file:D:/Study/2022_2023/M6/Unity/com.github.homuler.mediapipe-0.10.1.tgz",
       "depth": 0,
       "source": "local-tarball",
+=======
+      "version": "file:com.github.homuler.mediapipe",
+      "depth": 0,
+      "source": "embedded",
+>>>>>>> Stashed changes
       "dependencies": {}
     },
     "com.unity.burst": {

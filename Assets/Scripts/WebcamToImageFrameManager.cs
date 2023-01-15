@@ -13,8 +13,13 @@ public class WebcamToImageFrameManager: MonoBehaviour
     public MeshRenderer[] cubes_frame; 
 
 
+<<<<<<< Updated upstream
     WebCamTexture webcam;
     Texture2D tex;
+=======
+    public WebCamTexture webcam;
+    Color32[] _input_pixel32;
+>>>>>>> Stashed changes
     ImageFrame frame;
     Texture2D frameTexture;
     static NativeArray<byte> data;
@@ -23,10 +28,23 @@ public class WebcamToImageFrameManager: MonoBehaviour
     
     public void Start()
     {
+<<<<<<< Updated upstream
         webcam = new WebCamTexture(getWebcam(index),width, height);
         tex = new Texture2D(webcam.width, webcam.height);
         webcam.Play();
         frameTexture = new Texture2D(webcam.width, webcam.height, TextureFormat.ARGB32, 1, false);
+=======
+        Glog.Logtostderr = true; // when true, log will be output to `Editor.log` / `Player.log` 
+        //Glog.Initialize("MediaPipeUnityPlugin");
+
+        webcam = new WebCamTexture(getWebcam(index),width, height);
+        webcam.Play();
+
+        _input_pixel32 = new Color32[webcam.width * webcam.height];
+        frameTexture = new Texture2D(webcam.width, webcam.height, TextureFormat.ARGB32, 1, false);
+        
+
+>>>>>>> Stashed changes
         foreach(var cube in cubes_live)
             cube.material.mainTexture = webcam;
 
@@ -46,6 +64,7 @@ public class WebcamToImageFrameManager: MonoBehaviour
         return WebCamTexture.devices[0].name;
     }
 
+<<<<<<< Updated upstream
     public void updateImageFrame()
     {
         Graphics.CopyTexture(webcam, frameTexture);
@@ -77,5 +96,13 @@ public class WebcamToImageFrameManager: MonoBehaviour
     public static void Deleter(IntPtr _ptr)
     {
         data.Dispose();
+=======
+    public void getImageFrame(out ImageFrame iframe)
+    {
+        frameTexture.SetPixels32(webcam.GetPixels32(_input_pixel32));
+        var raw_tex = frameTexture.GetRawTextureData<byte>();
+        frame = new ImageFrame(ImageFormat.Types.Format.Srgba, webcam.width, webcam.height, 4 * webcam.width, raw_tex);
+        iframe = frame; 
+>>>>>>> Stashed changes
     }
 }

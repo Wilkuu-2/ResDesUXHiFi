@@ -1,0 +1,25 @@
+input_stream: "input_video" 
+output_stream: "landmarks" 
+
+input_side_packet: "model_complexity"
+input_side_packet: "use_prev_landmarks"
+
+node {
+  calculator: "FlowLimiterCalculator"
+  input_stream: "input_video"
+  input_stream: "FINISHED:landmarks"
+  input_stream_info: {
+    tag_index: "FINISHED"
+    back_edge: true
+  }
+  output_stream: "throttled_input_video"
+}
+
+node {
+    calculator: "PoseLandmarkCpu"
+
+    input_stream: "IMAGE:throttled_input_video" 
+    input_side_packet: "MODEL_COMPLEXITY:model_complexity"
+    input_side_packet: "USE_PREV_LANDMARKS:use_prev_landmarks"
+    output_stream: "WORLD_LANDMARKS:landmarks"
+}
