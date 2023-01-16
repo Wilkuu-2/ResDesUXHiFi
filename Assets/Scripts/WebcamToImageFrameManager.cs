@@ -19,8 +19,6 @@ public class WebcamToImageFrameManager: MonoBehaviour
     Texture2D frameTexture;
     static NativeArray<byte> data;
 
-    bool imageFrameAvail = false;
-    
     public void Start()
     {
         Glog.Logtostderr = true; // when true, log will be output to `Editor.log` / `Player.log` 

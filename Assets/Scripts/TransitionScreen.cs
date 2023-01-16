@@ -34,7 +34,7 @@ public class TransitionScreen : MonoBehaviour
         if (ticks >= period)
         {
             Debug.Log("Loading next scene");
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(next_scene_index);
             
         }
 
