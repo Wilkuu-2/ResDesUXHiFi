@@ -6,6 +6,7 @@ public class ClockSelector : MonoBehaviour
 {
     public static System.DateTime time;
     [SerializeField] Vector2 _set_time;
+    [SerializeField] int _next_scene_index = 2;
 
     TextMeshProUGUI _time_text; 
 
@@ -58,7 +59,7 @@ public class ClockSelector : MonoBehaviour
         if(_set_time.y < 0)
         {
             _set_time.y += 60;
-            _set_time.x += 1;
+            _set_time.x -= 1;
         }
 
         if(_set_time.x > 23)
@@ -91,6 +92,6 @@ public class ClockSelector : MonoBehaviour
 
     public void Arm()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(_next_scene_index);
     }
 }

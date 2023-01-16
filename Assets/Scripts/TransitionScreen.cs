@@ -1,12 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class TransitionScreen : MonoBehaviour
 {
     Material _material;
     [SerializeField] int period = 900;
+    [SerializeField] int next_scene_index = 0;
     
     System.DateTime stoptime; 
 
@@ -35,6 +34,8 @@ public class TransitionScreen : MonoBehaviour
         if (ticks >= period)
         {
             Debug.Log("Loading next scene");
+            SceneManager.LoadScene(0);
+            
         }
 
         

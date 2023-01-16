@@ -11,9 +11,14 @@ public class BodyTrackingSkeleton : MonoBehaviour
 {
     [SerializeField] WebcamToImageFrameManager manager;
     [SerializeField] GameObject skeletonMarkerPrefab;
-    [SerializeField] TextAsset _config; 
-    [SerializeField] float skeletonScale; 
-    [SerializeField] Vector3 skeletonOffset; 
+    [SerializeField] TextAsset _config;
+    [SerializeField] float skeletonScale;
+    [SerializeField] Vector3 skeletonOffset;
+
+    public GameObject leftWrist { get { return markers[15]; } }
+    public GameObject rightWrist { get {return markers[16]; } }
+    public GameObject leftKnee { get {return markers[25]; } }
+    public GameObject rightKnee { get {return markers[26]; } }
 
     private ResourceManager _resourceManager;
 
@@ -79,6 +84,8 @@ public class BodyTrackingSkeleton : MonoBehaviour
             gameobject.name = string.Format("Skeleton: [{0}]", i);
             markers[i] = gameobject;
         }
+
+        
       
     }
 
@@ -97,6 +104,7 @@ public class BodyTrackingSkeleton : MonoBehaviour
             {
                 marker.transform.position = transform.position + new Vector3(landmark.X, landmark.Y, landmark.Z) * skeletonScale + skeletonOffset;
             }
+            
         }
     }
 
