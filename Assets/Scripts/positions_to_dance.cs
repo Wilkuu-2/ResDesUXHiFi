@@ -31,3 +31,34 @@ public class positions_to_dance : MonoBehaviour
         
     }
 }
+
+
+class TrackingPoint {
+    Vector3 prev = Vector3.zero;
+    Vector3 current = Vector3.zero;
+    Vector3 furthest = Vector3.zero;
+    Vector3 closest = new Vector3(10000,10000,10000); 
+
+    Vector3 position { get { return current; } }
+    float magnitude { get { return current.magnitude } }
+    Vector3 velocity { get { return (current - prev) * Time.deltaTime } }
+    float speed { get { return velocity.magnitude} }
+    float relSpeed { get { return prev.magnitude - current.magnitude; } }
+    
+    void Feed(Transform point)
+    {
+        prev = current;
+        current = point.position;
+
+        if(magnitude < closest.magnitude)
+        {
+            closest = current; 
+        }
+        if(magnitude > furthest.magnitude)
+        {
+            furthest = current;
+        }
+    }
+    bool isMovingInwards { get { return relSpeed < 0; } }
+    
+}
