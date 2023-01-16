@@ -38,11 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-<<<<<<< Updated upstream
-  m_IndirectSpecularColor: {r: 2158.2725, g: 2262.8535, b: 3286.457, a: 1}
-=======
   m_IndirectSpecularColor: {r: 2160.0234, g: 2263.8008, b: 3286.5586, a: 1}
->>>>>>> Stashed changes
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -445,11 +441,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-<<<<<<< Updated upstream
-  - {fileID: 2100000, guid: dc18f60a1f3d079488a3c72d950bb943, type: 2}
-=======
   - {fileID: 2100000, guid: d4a3f45cb68ea584985bd4b722f17ede, type: 2}
->>>>>>> Stashed changes
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -725,10 +717,7 @@ MonoBehaviour:
   - {fileID: 2031025444}
   cubes_frame:
   - {fileID: 1421238979}
-<<<<<<< Updated upstream
-=======
   webcam: {fileID: 0}
->>>>>>> Stashed changes
 --- !u!114 &1823688470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -742,15 +731,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manager: {fileID: 1823688469}
-<<<<<<< Updated upstream
-  nodes: []
-=======
   skeletonMarkerPrefab: {fileID: 7636989867224417804, guid: 323441a7677292240854d7218e785df7,
     type: 3}
   _config: {fileID: 4900000, guid: 31e5f392dba67244091fbca94353d0a1, type: 3}
   skeletonScale: 10
   skeletonOffset: {x: 0, y: -2, z: 15}
->>>>>>> Stashed changes
 --- !u!1 &2013410473
 GameObject:
   m_ObjectHideFlags: 1
@@ -829,11 +814,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-<<<<<<< Updated upstream
-  m_Size: {x: 1, y: 1, z: 1}
-=======
   m_Size: {x: 0.1, y: 0.1, z: 0.1}
->>>>>>> Stashed changes
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &2031025444
 MeshRenderer:
@@ -855,11 +836,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-<<<<<<< Updated upstream
-  - {fileID: 2100000, guid: dc18f60a1f3d079488a3c72d950bb943, type: 2}
-=======
   - {fileID: 2100000, guid: d4a3f45cb68ea584985bd4b722f17ede, type: 2}
->>>>>>> Stashed changes
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -888,11 +865,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2031025442}
-<<<<<<< Updated upstream
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
-=======
   m_Mesh: {fileID: 8956276461189781062, guid: 4c3eca534a3709a44ab8ac7b265570a1, type: 3}
->>>>>>> Stashed changes
 --- !u!4 &2031025446
 Transform:
   m_ObjectHideFlags: 0
@@ -900,21 +873,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2031025442}
-<<<<<<< Updated upstream
-  m_LocalRotation: {x: -0, y: 0.510205, z: -0, w: 0.8600529}
-  m_LocalPosition: {x: -13.62, y: 9.19, z: 11.74}
-  m_LocalScale: {x: 10, y: 10, z: 10}
-=======
   m_LocalRotation: {x: -0.5861271, y: -0.2538904, z: -0.5092852, w: 0.57673496}
   m_LocalPosition: {x: -13.48795, y: 9.216198, z: 11.868781}
   m_LocalScale: {x: 1, y: 1, z: 1}
->>>>>>> Stashed changes
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
-<<<<<<< Updated upstream
-  m_LocalEulerAnglesHint: {x: 0, y: 61.355, z: 0}
-=======
   m_LocalEulerAnglesHint: {x: -69.177, y: 58.83, z: -125.383}
->>>>>>> Stashed changes
