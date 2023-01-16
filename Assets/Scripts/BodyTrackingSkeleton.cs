@@ -27,7 +27,7 @@ public class BodyTrackingSkeleton : MonoBehaviour
     IEnumerator Start()
     {
         Debug.Log("Loading graph Assets");
-        _resourceManager = new LocalResourceManager();
+        _resourceManager = new StreamingAssetsResourceManager();
         yield return _resourceManager.PrepareAssetAsync("pose_landmark_full.bytes");
 
         Debug.Log("Creating Graphs");
