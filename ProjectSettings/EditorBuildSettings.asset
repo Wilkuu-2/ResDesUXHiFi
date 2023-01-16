@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/ClockScene.unity
     guid: e239c3b49bdf7dd40b4687516ee12144
+  - enabled: 1
+    path: Assets/TransitionScene.unity
+    guid: a2ec13778e768fa469aff3aee500c212
   m_configObjects: {}

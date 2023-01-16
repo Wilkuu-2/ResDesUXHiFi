@@ -1,9 +1,10 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class ClockSelector : MonoBehaviour
 {
-    static System.DateTime time;
+    public static System.DateTime time;
     [SerializeField] Vector2 _set_time;
 
     TextMeshProUGUI _time_text; 
@@ -86,5 +87,10 @@ public class ClockSelector : MonoBehaviour
 
         Debug.Log(time.ToLongDateString());
         Debug.Log(time.ToLongTimeString());
+    }
+
+    public void Arm()
+    {
+        SceneManager.LoadScene(2);
     }
 }
