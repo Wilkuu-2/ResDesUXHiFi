@@ -63,6 +63,7 @@ public class BodyTrackingSkeleton : MonoBehaviour
 
         sp.Emplace("model_complexity", new IntPacket(1));
         sp.Emplace("use_previous_landmarks", new BoolPacket(true));
+        sp.Emplace("smooth_landmarks", new BoolPacket(true));
 
         landmark_stream = new OutputStream<LandmarkListPacket,LandmarkList>(graph, "landmarks");
         landmark_stream.StartPolling().AssertOk();

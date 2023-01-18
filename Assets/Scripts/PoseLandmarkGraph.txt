@@ -20,6 +20,7 @@ node {
 
     input_stream: "IMAGE:throttled_input_video" 
     input_side_packet: "MODEL_COMPLEXITY:model_complexity"
+    input_side_packet: "SMOOTH_LANDMARKS:smooth_landmarks"
     input_side_packet: "USE_PREV_LANDMARKS:use_prev_landmarks"
     output_stream: "WORLD_LANDMARKS:landmarks"
 }
