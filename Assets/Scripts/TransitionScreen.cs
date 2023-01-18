@@ -28,7 +28,7 @@ public class TransitionScreen : MonoBehaviour
         var seconds = dt.TotalSeconds;
 
         // Calculate 
-        var ticks = Mathf.Clamp(period - (float) seconds,0,period + 1); 
+        var ticks = Mathf.Clamp(period - (float) seconds,1,period + 1); 
         _material.SetFloat("_Transition_Ticks", ticks);
 
         if (ticks >= period)
