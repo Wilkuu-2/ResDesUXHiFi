@@ -5,50 +5,99 @@ using UnityEngine;
 public class positions_to_dance : MonoBehaviour
 {
     [SerializeField] BodyTrackingSkeleton skel;
-
-    Transform leftArm;
-    Transform rightArm;
-    Transform leftKnee;
-    Transform rightKnee;
+    [SerializeField] float[] weights = new float[5]; 
+    [SerializeField] float[] tresholds = new float[5]; 
 
 
+    Transform leftArm_tr;
+    Transform rightArm_tr;
+    Transform leftKnee_tr;
+    Transform rightKnee_tr;
+
+    float averageMovementValue = float.NegativeInfinity;
+    public bool ready = false;
+
+    public float movementScore = 0;
+    public int currentMovementScoreState = 0;
+
+    public TrackingPoint leftArm;
+    public TrackingPoint rightArm;
+    public TrackingPoint leftKnee;
+    public TrackingPoint rightKnee;
 
     // Start is called before the first frame update
-    void Start()
+    IEnumerator Start()
     {
-        leftArm = skel.leftWrist.transform;
-        rightArm = skel.rightWrist.transform;
-        leftKnee = skel.leftKnee.transform;
-        rightKnee = skel.rightKnee.transform;
+        while(skel.rightKnee == null)
+        {
+            Debug.Log("Waiting");
+            yield return new WaitForEndOfFrame();
+        }
+        Debug.Log("Ready");
+        leftArm_tr = skel.leftWrist.transform;
+        rightArm_tr = skel.rightWrist.transform;
+        leftKnee_tr = skel.leftKnee.transform;
+        rightKnee_tr = skel.rightKnee.transform;
 
+        leftArm = new TrackingPoint();
+        rightArm = new TrackingPoint();
+        leftKnee = new TrackingPoint();
+        rightKnee = new TrackingPoint();
 
+        while (true) {
 
-    }
+            leftArm.Feed(leftArm_tr);
+            rightArm.Feed(rightArm_tr);
 
-    // Update is called once per frame
-    void Update()
-    {
+            leftKnee.Feed(leftKnee_tr);
+            rightKnee.Feed(rightKnee_tr);
+
+            // TODO: Score berekenen
+
+            float MovementValue = leftArm.speed * weights[0] + rightArm.speed * weights[1] + leftKnee.speed * weights[2] + rightKnee.speed * weights[3];
+
+            if (float.IsInfinity(averageMovementValue))
+            {
+                averageMovementValue = MovementValue;
+            }
+            else
+            {
+                averageMovementValue = averageMovementValue * 0.9f + MovementValue * 0.1f;
+            }
+
+            movementScore += MovementValue - weights[4] * averageMovementValue;
+
+            currentMovementScoreState = 0;
+
+            foreach (float t in tresholds)
+            {
+                currentMovementScoreState += movementScore > t ? 1 : 0;
+            }
+            yield return new WaitForEndOfFrame();
+        }
         
+ 
     }
+
 }
 
 
-class TrackingPoint {
+public class TrackingPoint {
     Vector3 prev = Vector3.zero;
     Vector3 current = Vector3.zero;
-    Vector3 furthest = Vector3.zero;
-    Vector3 closest = new Vector3(10000,10000,10000); 
+    public Vector3 furthest = Vector3.zero;
+    public Vector3 closest = new Vector3(10000,10000,10000); 
 
-    Vector3 position { get { return current; } }
-    float magnitude { get { return current.magnitude } }
-    Vector3 velocity { get { return (current - prev) * Time.deltaTime } }
-    float speed { get { return velocity.magnitude} }
-    float relSpeed { get { return prev.magnitude - current.magnitude; } }
+    public Vector3 position { get { return current; } }
+    public float magnitude { get { return current.magnitude; } }
+    public Vector3 velocity { get { return (current - prev) * Time.deltaTime; } }
+    public float speed { get { return velocity.magnitude; } }
+    public float relSpeed { get { return prev.magnitude - current.magnitude; } }
     
-    void Feed(Transform point)
+    public void Feed(Transform point)
     {
         prev = current;
-        current = point.position;
+        current = point.localPosition;
 
         if(magnitude < closest.magnitude)
         {
@@ -59,6 +108,6 @@ class TrackingPoint {
             furthest = current;
         }
     }
-    bool isMovingInwards { get { return relSpeed < 0; } }
+    public bool isMovingInwards { get { return relSpeed < 0; } }
     
 }

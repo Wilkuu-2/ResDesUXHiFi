@@ -14,10 +14,30 @@ public class BodyTrackingSkeleton : MonoBehaviour
     [SerializeField] float skeletonScale;
     [SerializeField] Vector3 skeletonOffset;
 
-    public GameObject leftWrist { get { return markers[15]; } }
-    public GameObject rightWrist { get {return markers[16]; } }
-    public GameObject leftKnee { get {return markers[25]; } }
-    public GameObject rightKnee { get {return markers[26]; } }
+    public GameObject? leftWrist { 
+        get { 
+            try { return markers[15]; } 
+            catch (NullReferenceException) { return null; } 
+            } 
+        }
+    public GameObject? rightWrist { 
+        get { 
+            try { return markers[15]; } 
+            catch (NullReferenceException) { return null; } 
+            } 
+        }
+    public GameObject? leftKnee { 
+        get { 
+            try { return markers[15]; } 
+            catch (NullReferenceException) { return null; } 
+            } 
+        }
+    public GameObject? rightKnee {  
+        get { 
+            try { return markers[15]; } 
+            catch (NullReferenceException) { return null; } 
+            } 
+        }
 
     private ResourceManager _resourceManager;
 
@@ -30,6 +50,7 @@ public class BodyTrackingSkeleton : MonoBehaviour
     // Start is called before the first frame update
     IEnumerator Start()
     {
+        InitSkeleton();
         Debug.Log("Loading graph Assets");
         _resourceManager = new StreamingAssetsResourceManager();
         yield return _resourceManager.PrepareAssetAsync("pose_landmark_full.bytes");
@@ -50,8 +71,6 @@ public class BodyTrackingSkeleton : MonoBehaviour
 
         stopwatch = new System.Diagnostics.Stopwatch();
         stopwatch.Start();
-
-        InitSkeleton();
 
         while (true)
         {
@@ -79,8 +98,9 @@ public class BodyTrackingSkeleton : MonoBehaviour
         markers = new GameObject[33];
         for (int i = 0; i < 33; i++)
         {
-            var gameobject = Instantiate(skeletonMarkerPrefab, transform.position + new Vector3(0,i,0), Quaternion.identity);
+            GameObject gameobject = Instantiate(skeletonMarkerPrefab, transform.position + new Vector3(0,i,0), Quaternion.identity);
             gameobject.name = string.Format("Skeleton: [{0}]", i);
+            gameobject.transform.parent = transform;
             markers[i] = gameobject;
         }
 
@@ -101,7 +121,7 @@ public class BodyTrackingSkeleton : MonoBehaviour
 
             if (landmark != null && marker != null && landmark.HasX && landmark.HasY && landmark.HasZ)
             {
-                marker.transform.position = transform.position + new Vector3(landmark.X, landmark.Y, landmark.Z) * skeletonScale + skeletonOffset;
+                marker.transform.localPosition = new Vector3(landmark.X, landmark.Y, landmark.Z) * skeletonScale + skeletonOffset;
             }
             
         }
