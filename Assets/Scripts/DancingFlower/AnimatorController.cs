@@ -14,6 +14,8 @@ public class AnimatorController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        animator.speed = Random.Range(1.0f,3.0f);
+
         if(Input.GetKeyDown(KeyCode.Alpha1))
         {
             animator.SetBool("Phase1", true);
