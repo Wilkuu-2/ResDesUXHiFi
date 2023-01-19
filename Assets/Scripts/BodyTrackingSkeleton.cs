@@ -14,6 +14,7 @@ public class BodyTrackingSkeleton : MonoBehaviour
     [SerializeField] float skeletonScale;
     [SerializeField] Vector3 skeletonOffset;
 
+#nullable enable
     public GameObject? leftWrist { 
         get { 
             try { return markers[15]; } 
@@ -38,6 +39,7 @@ public class BodyTrackingSkeleton : MonoBehaviour
             catch (NullReferenceException) { return null; } 
             } 
         }
+#nullable disable
 
     private ResourceManager _resourceManager;
 

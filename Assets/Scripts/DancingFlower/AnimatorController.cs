@@ -2,64 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimatorController : MonoBehaviour
+namespace ResDesUX
 {
-    Animator animator;
-    // Start is called before the first frame update
-    void Start()
+    public class AnimatorController : MonoBehaviour
     {
-        animator = GetComponent<Animator>();
-    }
+        Animator animator;
+        public int state = 0;
+        public int stateMax = 4;
+        public int transitionFrames = 5;
+        private float inBetweenState;
 
-    // Update is called once per frame
-    void Update()
-    {
-        animator.speed = Random.Range(0.5f,2.0f);
-
-        if(Input.GetKeyDown(KeyCode.Alpha1))
+        // Start is called before the first frame update
+        void Start()
         {
-            animator.SetBool("Phase1", true);
-            animator.SetBool("Phase2", false);
-            animator.SetBool("Phase3", false);
-            animator.SetBool("Phase4", false);
-            animator.SetBool("Phase5", false);
- 
+            animator = GetComponent<Animator>();
         }
 
-        if(Input.GetKeyDown(KeyCode.Alpha2))
+        // Update is called once per frame
+        void Update()
         {
-            animator.SetBool("Phase2", true);
-            animator.SetBool("Phase1", false);
-            animator.SetBool("Phase3", false);
-            animator.SetBool("Phase4", false);
-            animator.SetBool("Phase5", false);
-        }
+          
+          
+          if(inBetweenState + 0.1 < state || inBetweenState - 0.1 > state)
+          {
+                inBetweenState += (state - Mathf.Round(inBetweenState)) / transitionFrames;
+          }
 
-        if(Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            animator.SetBool("Phase3", true);
-            animator.SetBool("Phase2", false);
-            animator.SetBool("Phase1", false);
-            animator.SetBool("Phase4", false);
-            animator.SetBool("Phase5", false);
-        }
-
-        if(Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            animator.SetBool("Phase4", true);
-            animator.SetBool("Phase2", false);
-            animator.SetBool("Phase3", false);
-            animator.SetBool("Phase1", false);
-            animator.SetBool("Phase5", false);
-        }
-
-        if(Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            animator.SetBool("Phase5", true);
-            animator.SetBool("Phase2", false);
-            animator.SetBool("Phase3", false);
-            animator.SetBool("Phase4", false);
-            animator.SetBool("Phase1", false);
+          animator.speed = 1 + 1 * inBetweenState / stateMax;
+          animator.SetFloat("State", inBetweenState / stateMax);
+            
         }
     }
 }

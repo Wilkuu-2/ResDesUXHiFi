@@ -9,8 +9,8 @@ public class WebcamToImageFrameManager: MonoBehaviour
     public int height;
     public int index;
 
-    public MeshRenderer[] cubes_live; 
-    public MeshRenderer[] cubes_frame; 
+    public MeshRenderer[] cubes_live = new MeshRenderer[1];
+    public MeshRenderer[] cubes_frame = new MeshRenderer[1];
 
 
     public WebCamTexture webcam;
