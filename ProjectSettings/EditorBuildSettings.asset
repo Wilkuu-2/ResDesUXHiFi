@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/TransitionScene.unity
     guid: a2ec13778e768fa469aff3aee500c212
+  - enabled: 1
+    path: Assets/dance.unity
+    guid: cf3e5fea8dce6244e8fd37d1fda53156
   m_configObjects: {}

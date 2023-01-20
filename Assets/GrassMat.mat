@@ -66,7 +66,7 @@ Material:
     - _AlphaToMaskInspectorValue: 0
     - _BlendMode: 0
     - _Boolean: 0
-    - _BumpResolution: 60
+    - _BumpResolution: 20
     - _ConservativeDepthOffsetEnable: 0
     - _CullMode: 2
     - _CullModeForward: 2
@@ -80,7 +80,7 @@ Material:
     - _LOD_MAX: 10
     - _LOD_MIN: 500
     - _OpaqueCullMode: 2
-    - _PatchResolution: 200
+    - _PatchResolution: 120
     - _RayTracing: 0
     - _ReceivesSSR: 1
     - _ReceivesSSRTransparent: 0
@@ -113,8 +113,8 @@ Material:
     - _ZTestTransparent: 4
     - _ZWrite: 1
     m_Colors:
-    - _ColorDark: {r: 0, g: 0.31132078, b: 0.037965912, a: 0}
-    - _ColorLight: {r: 0.41596377, g: 0.9811321, b: 0, a: 0}
+    - _ColorDark: {r: 0, g: 0.1882353, b: 0.12491989, a: 0}
+    - _ColorLight: {r: 0, g: 2, b: 1.5539626, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

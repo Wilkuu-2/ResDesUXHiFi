@@ -56,4 +56,9 @@ public class WebcamToImageFrameManager: MonoBehaviour
         frame = new ImageFrame(ImageFormat.Types.Format.Srgba, webcam.width, webcam.height, 4 * webcam.width, raw_tex);
         iframe = frame; 
     }
+
+    public void OnDestroy()
+    {
+        webcam.Stop();
+    }
 }

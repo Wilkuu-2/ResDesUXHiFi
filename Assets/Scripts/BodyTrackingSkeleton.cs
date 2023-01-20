@@ -14,6 +14,7 @@ public class BodyTrackingSkeleton : MonoBehaviour
     [SerializeField] float skeletonScale;
     [SerializeField] Vector3 skeletonOffset;
 
+
 #nullable enable
     public GameObject? leftWrist { 
         get { 
@@ -39,23 +40,28 @@ public class BodyTrackingSkeleton : MonoBehaviour
             catch (NullReferenceException) { return null; } 
             } 
         }
+    private static ResourceManager? _resourceManager = null;
 #nullable disable
 
-    private ResourceManager _resourceManager;
 
     CalculatorGraph graph;
     System.Diagnostics.Stopwatch stopwatch;
     LandmarkList landmarks;
     OutputStream<LandmarkListPacket, LandmarkList> landmark_stream;
     GameObject[] markers;
+    public bool hasLandmarks = false;
 
     // Start is called before the first frame update
     IEnumerator Start()
     {
         InitSkeleton();
         Debug.Log("Loading graph Assets");
-        _resourceManager = new StreamingAssetsResourceManager();
-        yield return _resourceManager.PrepareAssetAsync("pose_landmark_full.bytes");
+        
+        if (_resourceManager == null) {
+            _resourceManager = new StreamingAssetsResourceManager();
+            yield return _resourceManager.PrepareAssetAsync("pose_landmark_full.bytes");
+        }
+
 
         Debug.Log("Creating Graphs");
         graph = new CalculatorGraph(_config.text);
@@ -125,6 +131,11 @@ public class BodyTrackingSkeleton : MonoBehaviour
             if (landmark != null && marker != null && landmark.HasX && landmark.HasY && landmark.HasZ)
             {
                 marker.transform.localPosition = new Vector3(landmark.X, landmark.Y, landmark.Z) * skeletonScale + skeletonOffset;
+                hasLandmarks = true;
+            }
+            else 
+            {
+                hasLandmarks = false;
             }
             
         }

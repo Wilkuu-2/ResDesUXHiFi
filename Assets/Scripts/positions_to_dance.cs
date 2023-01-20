@@ -1,16 +1,23 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace ResDesUX
 {
     public class positions_to_dance : MonoBehaviour
     {
         [SerializeField] BodyTrackingSkeleton skel;
-        [SerializeField] float[] weights = new float[5];
+        [SerializeField] float[] weights = new float[6];
         [SerializeField] float[] tresholds = new float[4];
         [SerializeField] AnimatorController[] controllers = new AnimatorController[5];
         [SerializeField] float goal = 600;
         [SerializeField] GameObject sun;
+
+        [SerializeField] AudioSource alarm; 
+        [SerializeField] AudioSource music; 
+
+        [SerializeField] float hackAddAmount = 100f;
+        [SerializeField] float fallThreshold = 10f ;
 
         Transform leftArm_tr;
         Transform rightArm_tr;
@@ -24,6 +31,7 @@ namespace ResDesUX
         public int currentMovementScoreState = 3;
         public float movementScoreZeroPoint = 0;
         int lastMovementScoreState = 3;
+        bool musicPlaying = false;
 
         public TrackingPoint leftArm;
         public TrackingPoint rightArm;
@@ -36,11 +44,8 @@ namespace ResDesUX
         // Start is called before the first frame update
         IEnumerator Start()
         {
-            while (skel.rightKnee == null)
-            {
-                Debug.Log("Waiting");
-                yield return new WaitForEndOfFrame();
-            }
+            yield return new WaitUntil(() => skel.rightKnee != null);
+            
             Debug.Log("Ready");
             leftArm_tr = skel.leftWrist.transform;
             rightArm_tr = skel.rightWrist.transform;
@@ -55,6 +60,10 @@ namespace ResDesUX
             sun_light = sun.GetComponent<Light>();
             sun_position = sun.transform;
 
+
+            yield return new WaitUntil(() => skel.hasLandmarks);
+
+
             while (true)
             {
 
@@ -64,9 +73,15 @@ namespace ResDesUX
                 leftKnee.Feed(leftKnee_tr);
                 rightKnee.Feed(rightKnee_tr);
 
-                // TODO: Score berekenen
-
                 float MovementValue = leftArm.speed * weights[0] + rightArm.speed * weights[1] + leftKnee.speed * weights[2] + rightKnee.speed * weights[3];
+
+                if (Input.GetKey(KeyCode.Space))
+                {
+                    MovementValue += hackAddAmount * Time.deltaTime;
+                }
+
+
+                // TODO: Score berekenen
 
                 if (float.IsInfinity(averageMovementValue))
                 {
@@ -77,8 +92,15 @@ namespace ResDesUX
                     averageMovementValue = averageMovementValue * 0.9f + MovementValue * 0.1f;
                 }
 
-                movementScore += MovementValue - weights[4] * averageMovementValue;
+                MovementValue += (- weights[4] * averageMovementValue) - (1f * weights[5]);
+                movementScore += MovementValue;
 
+                if (movementScore > 0 && !musicPlaying) {
+                    musicPlaying = true;
+                    music.Play();
+                    alarm.loop = false; 
+                    alarm.Stop();
+                }
 
                 lastMovementScoreState = currentMovementScoreState;
                 currentMovementScoreState = 0;
@@ -88,14 +110,9 @@ namespace ResDesUX
                     currentMovementScoreState += movementScore > t + movementScoreZeroPoint ? 1 : 0;
                 }
 
-                if (currentMovementScoreState > lastMovementScoreState)
+                if (averageMovementValue < fallThreshold * Time.deltaTime && movementScore > movementScoreZeroPoint)
                 {
-                    if (tresholds[lastMovementScoreState] > 0)
-                    {
-                        movementScoreZeroPoint = movementScoreZeroPoint + tresholds[lastMovementScoreState];
-                        movementScore += tresholds[lastMovementScoreState];
-                        goal += tresholds[lastMovementScoreState];
-                    }
+                    movementScoreZeroPoint = movementScore;        
                 }
 
                 foreach (var controller in controllers)
@@ -103,12 +120,17 @@ namespace ResDesUX
                     controller.state = currentMovementScoreState;
                 }
 
-                sun_position.eulerAngles = new Vector3(Mathf.Lerp(40, 90, (movementScore - movementScoreZeroPoint) / (goal - movementScoreZeroPoint)),
+                sun_position.eulerAngles = new Vector3(Mathf.Lerp(60, 90, (movementScore) / (goal)),
                                                         sun_position.eulerAngles.y,
                                                         sun_position.eulerAngles.z);
 
-                sun_light.intensity = Mathf.Lerp(13000, 130000, (movementScore - movementScoreZeroPoint) / (goal - movementScoreZeroPoint));
+                sun_light.intensity = Mathf.Lerp(13000, 130000, (movementScore) / (goal));
 
+                if(movementScore > goal)
+                {
+                    SceneManager.LoadScene(1);
+                }
+                    
                 yield return new WaitForEndOfFrame();
 
 
