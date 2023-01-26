@@ -1,17 +1,25 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 
 namespace ResDesUX
 {
     public class positions_to_dance : MonoBehaviour
     {
+        // Static stuff for the next scene
+        public static TimeSpan to_wakeup;
+        public static TimeSpan to_end;
+        public static DateTime end_time;
+        public static int lastFlowerState = 0; 
+
         [SerializeField] BodyTrackingSkeleton skel;
         [SerializeField] float[] weights = new float[6];
         [SerializeField] float[] tresholds = new float[4];
         [SerializeField] AnimatorController[] controllers = new AnimatorController[5];
         [SerializeField] float goal = 600;
         [SerializeField] GameObject sun;
+        [SerializeField] int next_scene_index = 4; 
 
         [SerializeField] AudioSource alarm; 
         [SerializeField] AudioSource music; 
@@ -37,6 +45,8 @@ namespace ResDesUX
         public TrackingPoint rightArm;
         public TrackingPoint leftKnee;
         public TrackingPoint rightKnee;
+
+        public ProgressBar bar;
 
         Light sun_light;
         Transform sun_position;
@@ -100,10 +110,12 @@ namespace ResDesUX
                     music.Play();
                     alarm.loop = false; 
                     alarm.Stop();
+                    to_wakeup = DateTime.Now - ClockSelector.time;
                 }
 
                 lastMovementScoreState = currentMovementScoreState;
                 currentMovementScoreState = 0;
+
 
                 foreach (float t in tresholds)
                 {
@@ -126,9 +138,16 @@ namespace ResDesUX
 
                 sun_light.intensity = Mathf.Lerp(13000, 130000, (movementScore) / (goal));
 
+                bar.max = goal;
+                bar.status = movementScore;
+
                 if(movementScore > goal)
                 {
-                    SceneManager.LoadScene(0);
+                    lastFlowerState = currentMovementScoreState;
+                    end_time = DateTime.Now; 
+                    to_end = ClockSelector.time - end_time;
+
+                    SceneManager.LoadScene(next_scene_index);
                 }
                     
                 yield return new WaitForEndOfFrame();

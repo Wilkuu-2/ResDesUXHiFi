@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/dance.unity
     guid: cf3e5fea8dce6244e8fd37d1fda53156
+  - enabled: 1
+    path: Assets/Ending_Scene.unity
+    guid: 54f7d528aca4b0943b058740ddfd02a8
   m_configObjects: {}
