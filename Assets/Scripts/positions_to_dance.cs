@@ -128,7 +128,7 @@ namespace ResDesUX
 
                 if(movementScore > goal)
                 {
-                    SceneManager.LoadScene(1);
+                    SceneManager.LoadScene(0);
                 }
                     
                 yield return new WaitForEndOfFrame();
